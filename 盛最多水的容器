@@ -1,0 +1,26 @@
+class Solution {
+    //最简单的做法，效果很差
+    public int maxArea(int[] height) {
+        if(height.length<2)
+            return 0;
+        int sum=0;
+        for(int i=0;i<height.length;i++)
+            for(int j=0;j<height.length;j++){
+                int ans=Math.abs(j-i)*Math.min(height[j],height[i]);
+                if(ans>sum)
+                    sum=ans;
+            }
+       return sum;         
+    }
+    
+    //DFS
+    public int maxArea(int[] a) {
+		 int max = 0;
+		 for(int i = 0, j = a.length - 1; i < j ; ){
+			 int minHeight = a[i] < a[j] ? a[i ++] : a[j --];
+			 max = Math.max(max, (j - i + 1) * minHeight);
+		 }
+		 return max;
+	 }
+
+}
