@@ -1,0 +1,56 @@
+//https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/comments/
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        List<Integer> result=new ArrayList<>();
+        if(s==null || s.length()==0|| words==null || words.length==0)
+            return result;
+        //将所有字符加入数组Hash表
+        Map<String,Integer> wordsCount=generateCount(words);
+        int length=words[0].length();
+        for(int i=0;i<length;++i){  //错位循环，确保遍历到所有情况
+            Map<String,Integer> window=new HashMap<>();
+            int left=i;
+            int right=i;
+            while(right<=s.length()-length && left<=s.length()-length*words.length){
+                String sub=s.substring(right,right+length);
+                increase(window,sub);//取一个字符加入窗口hash表
+                if(!wordsCount.containsKey(sub)){
+                    window.clear();
+                    right+=length;
+                    left=right;
+                    continue;
+                }
+                while(window.get(sub)>wordsCount.get(sub)){
+                    //当窗口Hash中字符次数多于数组Hash字符次数时，left+l,从窗口中移除最左边的字符
+                    decrease(window,s.substring(left,left+length));
+                    left+=length;
+                }
+                right+=length;
+                if(right-left==length*words.length)
+                    //当窗口长度正好等于数组字符总长度时，表示匹配成功，加入结果中
+                    result.add(left);
+            }
+        }
+        return result;
+    }
+    public Map<String,Integer> generateCount(String[] words){
+        Map<String,Integer> wordsCount=new HashMap<>();
+        for(String word:words){
+            increase(wordsCount,word);
+        }
+        return wordsCount;
+    }
+    public void increase(Map<String,Integer> map,String key){
+        if(map.containsKey(key))
+            map.put(key,map.get(key)+1);
+        else map.put(key,1);
+    }
+    public void decrease(Map<String,Integer> map,String key){
+        if(map.containsKey(key)){
+           Integer value=map.get(key);
+            if(value<=1)
+                map.remove(key);
+            else map.put(key,value-1);
+        }            
+    }
+}
