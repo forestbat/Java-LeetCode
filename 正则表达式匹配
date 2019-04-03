@@ -1,0 +1,6 @@
+class Solution {
+    public boolean isMatch(String s, String p) {
+        //是的就是用标准库这么简单
+        return s.matches(p);      
+    }
+}
