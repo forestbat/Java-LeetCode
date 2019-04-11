@@ -1,0 +1,15 @@
+class Solution {
+    public boolean isNumber(String s) {
+    	int len=s.length();
+    	char ch=s.charAt(len-1); //从s某一点取值
+    	if(ch=='f'||ch=='d'||ch=='F'||ch=='D')
+    		return false;
+        try {
+        	double d=Double.parseDouble(s);//直接尝试从s中解析数据进而转型
+        	return true;
+        }
+        catch (Exception e) {
+			return false;
+		}
+    }
+}
