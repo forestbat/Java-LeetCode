@@ -1,0 +1,30 @@
+//https://leetcode-cn.com/problems/clumsy-factorial/
+class Solution {
+    public int clumsy(int N) {
+         if( N == 1 || N == 2)
+            return N;    
+        int res = 0;        
+        //首先处理开头的 正号的 * /
+        res += N *(N-1)/(N-2);        
+        //之后处理式子中的 加法
+        int now = N - 3;
+        while( now >= 1){
+            res += now; 
+            now -= 4;
+        }
+        //最后处理式子中的 负号的 * /
+        now = N - 4;
+        while( now >= 1){
+            if( now == 3)
+                res -= 6;
+            else if( now == 2)
+                res -= 2;
+            else if( now == 1)
+                res -= 1;
+            else
+                res -= now*(now-1)/(now-2);
+            now-=4;            
+        }            
+        return res;        
+    }
+}
