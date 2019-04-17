@@ -1,0 +1,35 @@
+//https://leetcode-cn.com/problems/merge-k-sorted-lists/
+//采取分治算法
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        if(lists.length==0)
+            return null;
+        if(lists.length==1)
+            return lists[0];
+        if(lists.length==2)
+            return mergeTwoLists(lists[0],lists[1]);
+        int mid=lists.length/2;
+        ListNode[] listNode1=new ListNode[mid];
+        for(int i=0;i<mid;i++)
+            listNode1[i]=lists[i];
+        ListNode[] listNode2=new ListNode[lists.length-mid];
+        for(int i=mid,j=0;i<lists.length;i++,j++)
+            listNode2[j]=lists[i];
+        return mergeTwoLists(mergeKLists(listNode1),mergeKLists(listNode2));
+    }
+    
+    public ListNode mergeTwoLists(ListNode listNode1,ListNode listNode2){
+        if (listNode1 == null) return listNode2;
+        if (listNode2 == null) return listNode1;
+        ListNode head=null;
+        if(listNode1.val<=listNode2.val){
+            head=listNode1;
+            head.next=mergeTwoLists(listNode1.next,listNode2);
+        }
+        else {
+            head=listNode2;
+            head.next=mergeTwoLists(listNode1,listNode2.next);
+        }
+        return head;
+    }
+}
