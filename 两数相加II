@@ -1,0 +1,59 @@
+//https://leetcode-cn.com/problems/add-two-numbers-ii/
+//获取长短链路的差值，然后长短链路重合的后半部分进行数值加法，然后使用递归进行长链路的后置节点进位至前置节点
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {        
+        ListNode node1=l1;
+        int length1=0;
+        while(node1!=null){
+            length1++;
+            node1=node1.next;
+        }
+        ListNode node2=l2;
+        int length2=0;
+        while(node2!=null){
+            length2++;
+            node2=node2.next;
+        }
+        ListNode longNode=length1>length2?l1:l2;
+        ListNode shortNode=length1<=length2?l1:l2;
+        ListNode longNode1=longNode;
+        int gap=Math.abs(length1-length2);
+        while(gap>0 && longNode1!=null){
+            gap--;
+            longNode1=longNode1.next;
+        }
+        ListNode node3=longNode1;
+        ListNode node4=shortNode;
+        while(node3!=null && node4!=null){
+            node3.val=node3.val+node4.val;
+            node3=node3.next;
+            node4=node4.next;
+        }
+        int val=format(longNode);
+        if(val!=0){
+            ListNode node=new ListNode(val);
+            node.next=longNode;
+            return node;
+        }
+        return longNode;
+    }
+    public int format(ListNode node){
+        if(node.next==null){
+           int val=node.val;
+           node.val=val%10;
+           return val/10;
+        }
+        int value=format(node.next);
+        int nodeVal=node.val+value;
+        node.val=nodeVal%10;
+        return nodeVal/10;
+    }
+}
