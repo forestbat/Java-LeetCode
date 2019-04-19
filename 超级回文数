@@ -1,0 +1,36 @@
+//https://leetcode-cn.com/problems/super-palindromes/
+class Solution {
+   public int superpalindromesInRange(String L, String R) {
+        int ans = 0;
+        long left = (long) Math.ceil(Math.sqrt(new Long(L)));
+        long right = (long) Math.floor(Math.sqrt(new Long(R)));
+        long magic = (long) Math.ceil(Math.pow(10, 4.5));
+        for(long i = 1; i <= magic; i++) {
+            long even = i, odd = i;
+            // Count the even length palindrome
+            for(long j = i; j > 0; j = j/10) {
+                even = even * 10 + (j % 10);
+            }
+            if(left <= even && even <= right && isPalindrome(even * even)) ans++;
+            // Count the odd length palindrome
+            for(long j = i/10; j > 0; j = j/10) {
+                odd = odd * 10 + (j % 10);
+            }
+            if(left <= odd && odd <= right && isPalindrome(odd * odd)) ans++;
+        }
+        return ans;
+    }
+
+    public boolean isPalindrome(long x) {
+        return x == reverse(x);
+    }
+
+    public long reverse(long x) {
+        long ans = 0;
+        while (x > 0) {
+            ans = 10 * ans + x % 10;
+            x /= 10;
+        }
+        return ans;
+    }
+}
