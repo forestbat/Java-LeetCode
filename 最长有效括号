@@ -1,4 +1,5 @@
 //https://leetcode-cn.com/problems/longest-valid-parentheses/
+//对字符串遍历，进行括弧有效性验证，记录最大的有效长度。同样的方式，倒序再来一次，取最大值。时间复杂度 2*s.length
 class Solution {
     public int longestValidParentheses(String s) {
         char[] chars=s.toCharArray();
