@@ -1,0 +1,24 @@
+//https://leetcode-cn.com/problems/image-overlap/
+class Solution {
+    public int largestOverlap(int[][] A, int[][] B) {
+        int res=0;
+        int[][] nums=new int[A.length*2-1][A.length*2-1];
+        int length=A.length;
+        for(int i=0;i<A.length;i++)
+            for(int j=0;j<A.length;j++)
+                if(A[i][j]==1)
+                   addRes(nums,i,j,B);
+        for(int i=0;i<nums.length;i++)
+            for(int j=0;j<nums.length;j++)
+                if(nums[i][j]>res)
+                    res=nums[i][j];
+        return res;
+    }
+    
+    public void addRes(int[][] nums,int a,int b,int[][] B){
+        for(int i=0;i<B.length;i++)
+            for(int j=0;j<B.length;j++)
+                if(B[i][j]==1)
+                    nums[B.length-1+(i-a)][B.length-1+(j-b)]++;
+    }
+}
