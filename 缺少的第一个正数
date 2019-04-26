@@ -1,0 +1,28 @@
+//https://leetcode-cn.com/problems/first-missing-positive/
+class Solution {
+    public int firstMissingPositive(int[] nums) {
+        int length=nums.length;
+        if(length==0)
+            return 1;
+        int max=Integer.MIN_VALUE;
+        //找出数组中最大的数
+        for(int i=0;i<nums.length;i++)
+            max=max>nums[i]?max:nums[i];
+        if(max<=0) return 1;
+        if(max>length) max=length;
+        //基于桶排序方法，构建index和值相同的数组
+        int[] bucket=new int[max+1];
+        for(int i=0;i<length;i++){
+            if(nums[i]<=0||nums[i]>length) continue;
+            bucket[nums[i]]++;
+        }
+        //排除数组中全为大于length的值和数组中没有1的情况
+        if(bucket.length==0 || bucket[1]==0)
+            return 1;
+        int i=1;
+        //当第一个index 不等于其值的下一个index为最终结果
+        for(;i<bucket.length;i++)
+            if(bucket[i]==0) break;
+        return i;
+    }
+}
