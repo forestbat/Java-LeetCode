@@ -11,6 +11,7 @@ class Solution {
     }
     
     public int kmp(char[] str){
+        //https://baike.baidu.com/item/kmp%E7%AE%97%E6%B3%95/10951804
         int[] nexts=new int[str.length+1];
         nexts[0]=-1;
         nexts[1]=0;
