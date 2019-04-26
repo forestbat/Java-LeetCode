@@ -1,0 +1,27 @@
+//https://leetcode-cn.com/problems/shortest-palindrome/
+class Solution {
+    public String shortestPalindrome(String s) {
+        if(s==null || s.length()==0)
+            return "";
+        String r=new StringBuilder(s).reverse().toString();
+        String t=s+"#"+r;
+        int pLen=kmp(t.toCharArray());
+        //把原字符串反转后的字符串，去掉kmp所取的一截，连接在原字串上
+        return r.substring(0,r.length()-pLen)+s;
+    }
+    
+    public int kmp(char[] str){
+        int[] nexts=new int[str.length+1];
+        nexts[0]=-1;
+        nexts[1]=0;
+        int cn=0,i=2;
+        while(i<nexts.length){
+            if(str[i-1]==str[cn])
+                nexts[i++]=++cn;
+            else if(cn>0)
+                cn=nexts[cn];
+            else nexts[i++]=0;
+        }
+        return nexts[str.length];
+    }
+}
