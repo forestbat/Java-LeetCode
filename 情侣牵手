@@ -1,0 +1,24 @@
+//https://leetcode-cn.com/problems/couples-holding-hands/
+class Solution {
+    public int minSwapsCouples(int[] row) {
+        int n=row.length;
+        int count=0;
+        for(int i=0;i<n;i+=2)
+            if(couple(row[i])!=row[i+1])
+                for(int j=2;j<n;j++)
+                   if(row[j]==couple(row[i])){
+                       count++;
+                       swap(row,i+1,j);
+                   }
+        return count;
+    }
+    
+    public int couple(int index) {
+		return index%2==0?index+1:index-1;
+	}
+    public static void swap(int[] row,int i,int j) {
+		row[i] = row[i]^row[j];
+		row[j] = row[i]^row[j];
+		row[i] = row[i]^row[j];
+	}
+}
