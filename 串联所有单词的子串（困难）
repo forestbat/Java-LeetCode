@@ -1,4 +1,4 @@
-//https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/comments/
+//https://leetcode-cn.com/problems/substring-with-concatenation-of-all-words/
 class Solution {
     public List<Integer> findSubstring(String s, String[] words) {
         List<Integer> result=new ArrayList<>();
