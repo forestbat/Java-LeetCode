@@ -1,0 +1,24 @@
+//https://leetcode-cn.com/problems/generate-parentheses/
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<String>();
+        StringBuilder sb = new StringBuilder("");
+        findNext(0,0,n,sb,res);
+        return res;
+    }
+    
+    public void findNext(int po, int ne, int n, StringBuilder sb, List<String> res) {
+    //深度优先+剪枝
+        if (po + ne == n+n) res.add(sb.toString());
+        if (po < n) {
+            sb.append("(");
+            findNext(po+1,ne,n,sb,res);
+            sb.delete(sb.length()-1,sb.length());
+        }
+        if (ne < n && po-ne > 0) {
+            sb.append(")");
+            findNext(po,ne+1,n,sb,res);
+            sb.delete(sb.length()-1,sb.length());
+        }
+    }
+}
