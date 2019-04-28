@@ -1,3 +1,4 @@
+//https://leetcode-cn.com/problems/number-of-enclaves/
 //从边界的陆地出发，用DFS把所有用边界陆地连接的陆地标记为可移动格，最后再统计（陆地格- 可移动陆地）= (不可移动陆地)：
 class Solution {
     public int numEnclaves(int[][] A) {
