@@ -1,6 +1,7 @@
+//https://leetcode-cn.com/problems/regular-expression-matching/
 class Solution {
     public boolean isMatch(String s, String p) {
-        //是的就是用标准库这么简单
+        //是的就是用标准库这么简单，居然还能击败40%
         return s.matches(p);      
     }
     
@@ -28,6 +29,6 @@ class Solution {
 				}
 			}
 		}
-		return memory[cur][pLen];
+	return memory[cur][pLen];
     }
 }
