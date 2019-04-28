@@ -1,0 +1,67 @@
+class Solution {
+    public TreeNode recoverFromPreorder(String S) {
+        int firstNumIndex=S.indexOf('-');
+        if(firstNumIndex==-1)
+            return new TreeNode(Integer.valueOf(S));
+        String rootValue=S.substring(0,firstNumIndex);
+        TreeNode root=new TreeNode(Integer.valueOf(rootValue));//构造根节点
+        Deque<TreeNode> stack=new LinkedList();//双端队列模拟栈(LinkedList同时具有队列和栈的特性)
+        stack.push(root);//根节点入栈
+        StringBuilder nodeValue=new StringBuilder();
+        int nodeVal=0;
+        int prevDepth=0;//上一次的深度
+        int depth=0;//当前深度
+        for(int i=firstNumIndex;i<S.length();i++){
+            char cur=S.charAt(i);
+            if('-'==cur){
+                //表示深度的字符
+                if(nodeVal>0){
+                    //表示之前是数值
+                    TreeNode node=new TreeNode(nodeVal);
+                    buildNodeRelation(depth,prevDepth,stack,node);
+                    stack.push(node);//节点入栈，先序遍历
+                    nodeVal=0;
+                    nodeValue.setLength(0);//生成后清空
+                    prevDepth=depth;
+                    depth=1;
+                }
+                else depth++;
+            }
+            else{
+                //代表字符是数字
+                nodeVal=nodeVal*10+(cur-'0');
+                nodeValue.append(cur);//当前字符加入
+                if(i==S.length()-1){//最后一个元素
+                    //表示之前是数值
+                    TreeNode node=new TreeNode(nodeVal);
+                    buildNodeRelation(depth,prevDepth,stack,node);
+                }
+            }
+        }
+       return root; 
+    }
+    
+    public void buildNodeRelation(int depth,int prevDepth,Deque<TreeNode> stack,TreeNode node){
+        if(depth>prevDepth){ //深度更大，表示是左子树
+            TreeNode prevNode=stack.peek();
+            prevNode.left=node;
+        }
+        else if(depth==prevDepth){//深度一样是右子树
+            stack.pop();//丢弃之前的节点
+            TreeNode prevNode=stack.peek();
+            prevNode.right=node;            
+        }
+        else{//深度小，则一直从栈中弹出，直到相等
+            int diff=prevDepth-depth+2;
+            TreeNode prevNode=null;
+            while(diff>0 &&!stack.isEmpty()){
+                prevNode=stack.pop();
+                diff--;
+            }
+            if(prevNode!=null){
+                prevNode.right=node;
+                stack.push(prevNode);
+            }
+        }
+    }
+}
