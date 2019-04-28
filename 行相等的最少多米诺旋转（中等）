@@ -1,0 +1,31 @@
+//https://leetcode-cn.com/problems/minimum-domino-rotations-for-equal-row/
+class Solution {
+    public int minDominoRotations(int[] A, int[] B) {
+        int times=Integer.MAX_VALUE;
+        //首行不交换
+        //A行相同 or B行相同 需要的次数
+        int ca=count(A,B),cb=count(B,A);
+        if(ca==Integer.MAX_VALUE && cb==Integer.MAX_VALUE)
+        	return -1;
+        times=Math.min(ca, cb);
+        
+      //首行交换
+        int temp=A[0];A[0]=B[0];B[0]=temp;
+        ca=count(A,B);cb=count(B,A);
+        times=Math.min(times, Math.min(ca, cb)+1);
+        return times;
+    }
+    
+    int count(int[] A, int[] B) {
+    	int tar=A[0],count=0;
+        for (int i = 1; i < A.length; i++) {
+			if(A[i]!=tar) {
+				if(B[i]!=tar)
+					return Integer.MAX_VALUE;
+				else count++;
+			}
+		}
+    	
+    	return count;
+    }
+}
