@@ -1,3 +1,4 @@
+//https://leetcode-cn.com/problems/permutation-sequence/
 class Solution {
     public String getPermutation(int n, int k) {
         StringBuilder sb=new StringBuilder();
