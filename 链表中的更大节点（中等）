@@ -1,0 +1,29 @@
+//https://leetcode-cn.com/problems/next-greater-node-in-linked-list/
+class Solution {
+    //使用单调递增栈解决此类问题
+    public int[] nextLargerNodes(ListNode head) {
+         int res[]=new int[10000];
+         int len=0;
+         while(head!=null){
+           res[len++]=head.val;
+           head=head.next;
+         }
+        int stack[]=new int[len];
+        int top=-1,i=len-1;
+        for(;i>=0;i--){
+            if(top==-1||res[i]<stack[top]){
+              stack[++top]=res[i];
+              res[i]=(top>0)?stack[top-1]:0;
+            }
+            else{
+             while(res[i]>=stack[top]){
+               top--;
+               if(top==-1)break;
+             }
+             stack[++top]=res[i];
+             res[i]=(top>0)?stack[top-1]:0;
+           }
+        }
+      return Arrays.copyOf(res,len);
+    }
+}
