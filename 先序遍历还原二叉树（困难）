@@ -1,3 +1,4 @@
+//https://leetcode-cn.com/problems/recover-a-tree-from-preorder-traversal/
 class Solution {
     public TreeNode recoverFromPreorder(String S) {
         int firstNumIndex=S.indexOf('-');
