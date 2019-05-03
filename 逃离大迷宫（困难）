@@ -1,0 +1,21 @@
+//https://leetcode-cn.com/problems/escape-a-large-maze/
+class Solution {
+    public boolean isEscapePossible(int[][] blocked, int[] source, int[] target) {
+        HashSet<String> set=new HashSet();
+        for(int[] block:blocked)
+            set.add(block[0]+"_"+block[1]);
+        return dfs(source[0],source[1],target,set)&&dfs(target[0], target[1], source, set);
+    }
+    
+    public static boolean dfs(int x,int y,int[] target,Set<String> set){
+        String key=x+"_"+y;
+        if (x==target[0]&&y==target[1]||set.size() > 20000){
+            return true;
+        }
+        if (x < 0 || y < 0 || x > 999999 || y > 999999 || set.contains(key)) {
+            return false;
+        }
+        set.add(key);
+        return dfs(x+1,y,target,set)||dfs(x-1,y,target,set)||dfs(x,y+1,target,set)||dfs(x,y-1,target,set);
+    }
+}
