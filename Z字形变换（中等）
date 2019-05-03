@@ -1,0 +1,39 @@
+//https://leetcode-cn.com/problems/zigzag-conversion/
+class Solution {
+    public String convert(String s, int numRows) {
+        if(numRows<=1)
+            return s;
+        StringBuilder sb=new StringBuilder();
+        char[] sChArr=s.toCharArray();
+        //首末行的间隔字符个数：行数*2-3；
+        int sameInternal=numRows*2-2;
+        int less=2,more=sameInternal-2;
+        int index;
+        for(int times=1;times<=numRows;times++){
+            index=times-1;
+            if(times==1 || times==numRows)
+                while(index<sChArr.length){
+                    sb.append(sChArr[index]);
+                    index+=sameInternal;
+                }
+            else{
+                int flag=0;
+                while(index<sChArr.length){
+                    if((flag&1)==0){
+                        sb.append(sChArr[index]);
+                        index+=more;
+                        flag++;
+                    }
+                    else{
+                        sb.append(sChArr[index]);
+                        index+=less;
+                        flag++;
+                    }
+                }
+                less+=2;
+                more-=2;
+            }
+        }
+        return sb.toString();
+    }
+}
