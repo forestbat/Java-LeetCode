@@ -1,0 +1,24 @@
+//https://leetcode-cn.com/contest/weekly-contest-135/problems/binary-search-tree-to-greater-sum-tree/
+class Solution {
+    public TreeNode bstToGst(TreeNode root) {
+        Deque<TreeNode> deque = new LinkedList<>();
+        TreeNode now = root;
+        while (now != null) {
+            deque.push(now);
+            now = now.right;
+        }
+        int sum = 0;
+        while (!deque.isEmpty()) {
+            now = deque.pop();
+            now.val += sum;
+            sum = now.val;
+            now = now.left;
+            while (now != null) {
+                deque.push(now);
+                now = now.right;
+            }
+        }
+        return root;
+    }
+}
+
