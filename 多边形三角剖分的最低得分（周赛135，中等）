@@ -1,3 +1,4 @@
+//https://leetcode-cn.com/contest/weekly-contest-135/problems/minimum-score-triangulation-of-polygon
 class Solution {
     public int minScoreTriangulation(int[] A) {
         final int alen = A.length;
