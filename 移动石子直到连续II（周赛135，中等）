@@ -1,0 +1,32 @@
+//https://leetcode-cn.com/contest/weekly-contest-135/problems/moving-stones-until-consecutive-ii/
+class Solution {
+    public int[] numMovesStonesII(int[] stones) {
+        int minimum_moves, maximum_moves;
+        Arrays.sort(stones);
+        maximum_moves = stones[stones.length - 1] - stones[0] + 1 - stones.length;
+        int min_space_of_max = Math.min(stones[stones.length - 1] - stones[stones.length - 2], stones[1] - stones[0]) - 1;
+        maximum_moves -= min_space_of_max;
+        minimum_moves = 0;
+        final int slen = stones.length;
+        int minIndex = 0, maxIndex = 0, maxIndexDiff = 0;
+        while (maxIndex < slen) {
+            if (stones[maxIndex] - stones[minIndex] > slen - 1) {
+                minIndex++;
+            } else {
+                if (maxIndexDiff < maxIndex - minIndex) {
+                    maxIndexDiff = maxIndex - minIndex;
+                }
+                maxIndex++;
+            }
+        }
+        minimum_moves = slen - (maxIndexDiff + 1);
+        if (minimum_moves == 1) {
+            if (stones[slen - 1] - stones[1] == slen - 1 - 1 && stones[1] - stones[0] != 2 ||
+               stones[slen - 2] - stones[0] == slen - 1 - 1 && stones[slen - 1] - stones[slen - 2] != 2) {
+                minimum_moves = 2;
+            }
+        }
+        return new int[]{minimum_moves, maximum_moves};
+    }
+}
+
