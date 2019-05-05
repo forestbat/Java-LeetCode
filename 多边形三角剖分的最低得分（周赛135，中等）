@@ -1,0 +1,20 @@
+class Solution {
+    public int minScoreTriangulation(int[] A) {
+        final int alen = A.length;
+        int[][] min = new int[alen][alen];
+        for (int indexDiff = 2; indexDiff < alen; indexDiff++) {
+            for (int start = 0; start < alen; start++) {
+                final int end = (start + indexDiff) % alen;
+                final int subMul = A[start] * A[end];
+                min[start][end] = 0x7fff_ffff;
+                for (int mid = (start + 1) % alen; mid != end; mid = (mid + 1) % alen) {
+                    int now = subMul * A[mid] + min[start][mid] + min[mid][end];
+                    if (min[start][end] > now) {
+                        min[start][end] = now;
+                    }
+                }
+            }
+        }
+        return min[0][A.length - 1];
+    }
+}
