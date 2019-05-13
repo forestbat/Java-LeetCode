@@ -1,0 +1,33 @@
+//https://leetcode-cn.com/problems/coloring-a-border/
+//题目意思就是把指定位置的连通分量的那一整块边缘染成指定颜色， 只要四个方向有一个方向不是连通分量的颜色（包括边界）就给它染色
+//本题采用BFS来遍历该连通分量
+class Solution {
+    public int[][] colorBorder(int[][] grid, int r0, int c0, int color) {
+        Queue<int[]> queue=new LinkedList();
+        boolean[][] visit=new boolean[grid.length][grid[0].length];
+        int initColor=grid[r0][c0];
+        visit[r0][c0]=true;
+        queue.offer(new int[]{r0,c0});
+        int[][] dirs=new int[][]{{0,1},{0,-1},{1,0},{-1,0}};
+        while(!queue.isEmpty()){
+            int[] point=queue.poll();
+            int x=point[0],y=point[1];
+            if(inBorder(grid,x,y))
+                grid[x][y]=color;
+            for(int[] dir:dirs){
+                int nx=x+dir[0],ny=y+dir[1];
+                if(nx<0||nx>=grid.length||ny<0||ny>=grid[0].length||visit[nx][ny])
+                    continue;
+                if(grid[nx][ny]==initColor){
+                    queue.offer(new int[]{nx,ny});
+                    visit[nx][ny]=true;
+                } 
+                else grid[x][y]=color;
+            }
+        }
+        return grid;
+    }
+    public boolean inBorder(int[][] grid, int r, int c) {        
+        return r == 0 || c == 0 || r == grid.length - 1 || c == grid[0].length - 1;
+    }
+}
