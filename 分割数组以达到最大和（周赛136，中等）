@@ -1,0 +1,16 @@
+//https://leetcode-cn.com/contest/weekly-contest-136/problems/partition-array-for-maximum-sum/
+class Solution{
+    public int maxSumAfterPartitioning(int[] a, int K){
+        int n=a.length;
+        long[] dp=new long[n+1];
+        for(int i=1;i<=n;i++){
+          int max=0;
+          for(int j=1;j<=K&&i-j>=0;j++){ //动规主体
+             max=Math.max(max,a[i-j]);
+             dp[i]=Math.max(dp[i],dp[i-j]+(long)max*j);
+          }
+        }
+        return (int)dp[n];
+     }
+}
+          
