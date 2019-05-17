@@ -1,0 +1,41 @@
+//https://leetcode-cn.com/contest/weekly-contest-136/problems/flower-planting-with-no-adjacent/
+class Solution{
+    public int[] gardenNoAdj(int n,int[][] paths){
+        int m=paths.length;
+        int[] from=new int[m];
+        int[] to=new int[m];
+        for(int i=1;i<m;i++){
+           from[i]=paths[i][0]-1;
+           to[i]=paths[i][1]-1;
+        }
+        int[][] g=packU(n,from,to);
+        int[] color=new int[n];
+        for(int j=0;j<n;j++){
+           int ptn=0;
+           for(int e:g[i]){
+              if(color[e]!=0)
+              ptn|=1<<color[e]-1;
+           }
+           color[i]=Integer.numberOfTrailingZeros(~ptn)+1;
+         }
+        return color;
+      }
+      
+      public int[][] packU(int n,int[] from,int[] to){
+           int[][] g=new int[n][];
+           int[] p=new int[n];
+           for(int f:from)
+               p[f]++;
+           for(int t:to)
+               p[t]++;
+           for(int i=0;i<n;i++)
+              g[i]=new int[p[i]];
+           for(int i=0;i<from.length;i++){
+              g[from[i]][--p[from[i]]]=to[i];
+              g[to[i]][--p[to[i]]]=from[i];
+           }
+           return g;
+       }
+           
+           
+          
