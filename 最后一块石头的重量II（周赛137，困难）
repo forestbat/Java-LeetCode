@@ -1,0 +1,17 @@
+//动态规划，https://leetcode-cn.com/contest/weekly-contest-137/problems/last-stone-weight-ii/
+class Solution{
+   public int lastStoneWeightII(int[] stones){
+       int sum=IntStream.of(stone).sum();//是个狼人
+       boolean[] f = new boolean[sum + 1];
+       f[0]=true;
+       int ans=sum;
+       for(int stone:stones)
+          for(int j=sum;j-stone>=0;j--){
+              f[j]=f[j]||f[j-stone];//挑选石头的过程？
+              if(f[j])
+              ans=Math.min(ans,Math.abs(j-(sum-j)));
+          }
+          return ans;          
+    }
+}
+       
