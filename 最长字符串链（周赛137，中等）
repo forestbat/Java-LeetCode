@@ -1,0 +1,26 @@
+//https://leetcode-cn.com/contest/weekly-contest-137/problems/longest-string-chain/
+class Solution{
+    //深度优先？
+    public int longestStrChain(String[] words){
+         Set<String> dict=new HashSet();
+         for(String word:words)
+            dict.add(word);
+         Map<String,Integer> memory=new HashMap();
+         for (String s : dict) 
+            ans = Math.max(ans, dfs(s, dict, memory));
+         return ans;
+    }
+    public int dfs(String latter,Set dict,Map memory){
+         if(memory.containsKey(latter))
+            return memory.get(latter);
+         int ans=1;
+         for(int i=0;i<latter.length;i++){
+            String former=latter.substring(0,i)+latter.substring(i,latter.length());
+            if(dict.contains(former))
+              ans=Math.max(ans,1+dfs(former,dict,memory));
+         }
+         memory.put(latter, ans);
+         return ans;           
+    }
+}
+    
