@@ -1,0 +1,26 @@
+//https://leetcode-cn.com/problems/group-anagrams/
+class Solution {
+    public List<List<String>> groupAnagrams(String[] strs) {
+        List<List<String>> res=new ArrayList<>();
+        //记录 (排序后的字符串，list编号)
+        Map<String,Integer> map=new HashMap();
+        for(String str:strs){
+            String s=sort(str);
+            Integer index=map.get(s);
+            if(index==null){
+                List<String> list=new ArrayList<>();
+                list.add(str);
+                res.add(list);
+                map.put(s,res.size()-1);
+            }
+            else
+                res.get(index).add(str);
+        }
+        return res;
+    }
+    public String sort(String s){
+        char[] cs=s.toCharArray();
+        Arrays.sort(cs);
+        return new String(cs);
+    }
+}
