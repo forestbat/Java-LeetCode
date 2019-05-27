@@ -1,0 +1,30 @@
+//https://leetcode-cn.com/problems/distant-barcodes/
+class Solution {
+    public int[] rearrangeBarcodes(int[] barcodes) {
+        if(barcodes==null || barcodes.length==1)
+            return barcodes;
+        HashMap<Integer,Integer> hashMap=new HashMap();
+        for(int barcode: barcodes){
+            hashMap.put(barcode, hashMap.getOrDefault(barcode, 0)+1);
+        } 
+        int length=barcodes.length;
+        PriorityQueue<int[]> q=new PriorityQueue<>((a,b)->b[1]-a[1]);
+        for(Map.Entry<Integer,Integer> entry:hashMap.entrySet()){
+            q.offer(new int[]{entry.getKey(),entry.getValue()});
+        }
+        int[] now=q.poll(),res=new int[length];
+        for(int i=0;i<length;i+=2){
+            if(now[1]<=0)
+                now=q.poll();
+            res[i]=now[0];
+            now[1]-=1;            
+        }
+        for(int i=1;i<length;i+=2){
+            if(now[1]<=0)
+                now=q.poll();
+            res[i]=now[0];
+            now[1]-=1;
+        }
+        return res;
+    }
+}
