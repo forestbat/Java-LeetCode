@@ -1,0 +1,33 @@
+//https://leetcode-cn.com/problems/combination-sum-ii/
+class Solution {
+    private List<List<Integer>> result;
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+    	result = new ArrayList<List<Integer>>();
+        if(target < 0 || candidates == null || candidates.length <= 0)
+        	return result;
+        Arrays.sort(candidates);
+        boolean[] visited = new boolean[candidates.length];
+        List<Integer> list = new ArrayList<Integer>();
+        combination(list, candidates, 0,target,visited);
+        return result;
+    }
+    
+    private void combination(List<Integer> list, int[] candidates,int begin, int target,boolean[] visited) {
+    	if(target <= 0) {
+    		if(target == 0) {
+				result.add(new ArrayList<Integer>(list));
+    		}
+    		return;
+    	}
+    	
+    	for(int i = begin; i < candidates.length && candidates[i] <= target; i++) {
+    		if(i != 0 && candidates[i] == candidates[i-1] && !visited[i-1])
+    			continue;
+    		visited[i] = true;
+    		list.add(candidates[i]);
+    		combination(list, candidates,i+1, target-candidates[i],visited);
+    		visited[i] = false;
+    		list.remove(list.size()-1);
+    	}
+    }
+}
