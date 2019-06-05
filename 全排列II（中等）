@@ -1,0 +1,32 @@
+//https://leetcode-cn.com/problems/permutations-ii/
+class Solution{
+public List<List<Integer>> permuteUnique(int[] nums) {
+	List<List<Integer>> lists = new ArrayList<>();
+	if (nums==null || nums.length == 0) {
+		return lists;
+	}
+	Arrays.sort(nums);
+	boolean[] marked = new boolean[nums.length];
+	backTracking(lists, new ArrayList<>(), marked, nums);
+	return lists;
+}
+public void backTracking(List<List<Integer>> lists, List<Integer> tmp, boolean[] marked, int[] nums) {
+	if (tmp.size() == nums.length) {
+		lists.add(new ArrayList<>(tmp));
+		return;
+	}
+	for (int i = 0; i < nums.length; i++) {
+		if (i!=0 && nums[i]==nums[i-1] && marked[i-1]==false) {
+			continue;
+		}
+		if (marked[i]==true) {
+			continue;
+		}
+		marked[i] = true;
+		tmp.add(nums[i]);
+		backTracking(lists, tmp, marked, nums);
+		tmp.remove(tmp.size()-1);
+		marked[i] = false;
+	}
+}
+}
